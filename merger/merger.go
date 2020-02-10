@@ -51,15 +51,31 @@ func MergeMap(first map[interface{}]interface{}, second map[interface{}]interfac
 		// fmt.Printf("first type:%v", reflect.TypeOf(first[k]))
 		// fmt.Printf("second type:%v", reflect.TypeOf(second[k]))
 		if reflect.TypeOf(second[k]) != reflect.TypeOf(first[k]) {
+			// fmt.Printf("if first: %v, second: :%v\n", first[k], second[k])
 			first[k] = v
-			// fmt.Printf("v:%v\n", v)
 		} else if reflect.TypeOf(first[k]) == reflect.TypeOf(map[interface{}]interface{}{}) {
 			//merge maps
+			// fmt.Printf("else if first: %v, second: :%v\n", first[k], second[k])
 			first[k] = MergeMap(first[k].(map[interface{}]interface{}), second[k].(map[interface{}]interface{}))
 		} else {
 			//for other types,replace it with value in first map.
+			// fmt.Printf("else first: %v, second: :%v\n", v, second[k])
 			first[k] = second[k]
-			// fmt.Printf("cover,v:%v\n", v)
+		}
+	}
+
+	for k, v := range second {
+		if reflect.TypeOf(second[k]) != reflect.TypeOf(first[k]) {
+			// fmt.Printf("if first: %v, second: :%v\n", first[k], second[k])
+			first[k] = v
+		} else if reflect.TypeOf(first[k]) == reflect.TypeOf(map[interface{}]interface{}{}) {
+			//merge maps
+			// fmt.Printf("else if first: %v, second: :%v\n", first[k], second[k])
+			first[k] = MergeMap(first[k].(map[interface{}]interface{}), second[k].(map[interface{}]interface{}))
+		} else {
+			//for other types,replace it with value in second map.
+			// fmt.Printf("else first: %v, second: :%v\n", v, second[k])
+			first[k] = second[k]
 		}
 	}
 
