@@ -6,7 +6,7 @@ import (
 	"io/ioutil"
 	"os"
 
-	"github.com/gitlawr/mergeyaml/merger"
+	"github.com/caylent/mergeyaml/merger"
 )
 
 var (
